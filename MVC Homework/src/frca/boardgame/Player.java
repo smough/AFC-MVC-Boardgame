@@ -1,5 +1,7 @@
 package frca.boardgame;
 
+import java.awt.Point;
+
 /**
  *
  * @author Justin Tennant
@@ -9,7 +11,8 @@ public class Player implements View{
     private final String playerName;
     private int score;
     private int position;
-    public boolean missingTurn;
+    public boolean missingTurn = false;
+    public boolean extraTurn = false;
     private GamePiece piece;
 
     public Player(String newName, int newScore, int newPosition, String path) {
@@ -48,5 +51,14 @@ public class Player implements View{
 	{
 		// TODO Auto-generated method stub
 		//hi im a comment
+		Boolean skip = (Boolean) data[0];
+		Boolean extra = (Boolean) data[1];
+		Integer scoreMod = (Integer) data[2];
+		Point newCoord = (Point) data[3];
+		
+		missingTurn = skip;
+		extraTurn = extra;
+		this.modifyScore(scoreMod);
+		this.piece.setCoordinates(newCoord);
 	}
 }

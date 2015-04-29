@@ -63,7 +63,11 @@ public class GamePiece extends JComponent
     public int getPosition() { return position; }
     public void setPosition(int position) { this.position = position; }
 
-    public void setCoordinates(Point p) { point = p; }
+    public void setCoordinates(Point p) 
+    { 
+    	point = p; 
+    	this.repaint();
+    }
 
     public void setPieceImg(BufferedImage pieceImg) {
         this.pieceImg = pieceImg;
