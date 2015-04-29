@@ -15,11 +15,11 @@ public class Player implements View{
     public boolean extraTurn = false;
     private GamePiece piece;
 
-    public Player(String newName, int newScore, int newPosition, String path) {
+    public Player(String newName, int newScore, int newPosition, GamePiece piece) {
         playerName = newName;
         score = newScore;
         position = newPosition;
-        piece = new GamePiece(path);
+        this.piece = piece;
     }
 
     public String getName() {
@@ -40,11 +40,6 @@ public class Player implements View{
 
     public void modifyScore(int scoreModifier) {
         this.score = this.score + scoreModifier;
-    }
-
-    public int rollDice() {
-        Dice dice = new Dice();
-        return dice.roll();
     }
 
 	public void update(Object[] data)

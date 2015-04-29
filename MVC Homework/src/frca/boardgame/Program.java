@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
@@ -44,55 +46,86 @@ public class Program {
         spaces.add(new Space("Test14", Color.cyan, 0, false, false));
         spaces.add(new Space("Test15", Color.red, 0, false, false));
         
+        //create list of players
         LinkedList<View> playerList = new LinkedList<View>();
-        playerList.add(new Player("Hulk", 0, 0, "1.jpg"));
-        playerList.add(new Player("Rey", 0, 0, "2.jpg"));        
+
+        //create the first player
+        GamePiece playerOnePiece = new GamePiece("3.png");
+        Player playerOne = new Player("Hulk", 0, 0, playerOnePiece);
+        playerList.add(playerOne);
         
+        //create the second player
+        GamePiece playerTwoPiece = new GamePiece("2.png");
+        Player playerTwo = new Player("Rey", 0, 0, playerTwoPiece);
+        playerList.add(playerTwo);
+        
+        //add players as observers of the gameboard
         GameBoard gb = new GameBoard(spaces, playerList);
-        
-        //To-do: add file import (ie: loadGame(File file))
         
         Dimension wSize = new Dimension(800, 600);
         
+        //make a 800x600 window
         JFrame bgWindow = new JFrame("Game Board");
         bgWindow.setSize(wSize);
         bgWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         bgWindow.setLayout(new GridLayout(1,1));
         
-        GamePiece piece = new GamePiece();
+        //create a pair of dice and add the gameboard as a viewer
+        final Dice dice = new Dice(gb);
         
-        Dice dice = new Dice();
-        
+        //create a layered jpane to display the board, the player pieces, and the dice
         JLayeredPane lPane = new JLayeredPane();
         lPane.setSize(bgWindow.getSize());
-        //lPane.setLayout(new GridLayout(1,1));
         lPane.setLayout(null);
         lPane.setBounds(bgWindow.getBounds());
         
-        //gb.setBounds(bgWindow.getBounds());
-        //gb.setPreferredSize(bgWindow.getSize());
+        //add the gameboard to the background layer
         gb.setSize(800, 600);
         gb.setLocation(0,0);
         lPane.add(gb, -1);
         
-        piece.setSize(100, 200);
-        //piece.setBounds(new Rectangle(100, 200));
-        piece.setPreferredSize(new Dimension(100, 200));
-        piece.setLocation(gb.spaces.get(0).getX(), gb.spaces.get(0).getY());
-        //piece.setLocation(100, 200);
-        lPane.add(piece, 0);
+        //add player one's piece to the starting position
+        playerOnePiece.setSize(100, 200);
+        playerOnePiece.setPreferredSize(new Dimension(100, 200));
+        playerOnePiece.setLocation(gb.spaces.get(0).getX(), gb.spaces.get(0).getY());
+        lPane.add(playerOnePiece, 0);
         
+        //add player two's piece to the starting position
+        playerTwoPiece.setSize(100, 200);
+        playerTwoPiece.setPreferredSize(new Dimension(100, 200));
+        playerTwoPiece.setLocation(gb.spaces.get(0).getX() + 10, gb.spaces.get(0).getY() + 10); //offset so it doesnt overlap with player one
+        lPane.add(playerTwoPiece, 1);
+        
+        //add the dice to the center of the window
         dice.setSize(bgWindow.getWidth()*3/5, bgWindow.getHeight()*3/5);
         dice.setLocation(bgWindow.getWidth()/5, bgWindow.getHeight()/5);
         lPane.add(dice, 0);
         
-        System.out.println(bgWindow.getWidth() + " " + bgWindow.getHeight());
-        System.out.println(gb.getBounds());
+        //add button to roll dice        
+        JButton rollButton = new JButton();
+        rollButton.addActionListener(new ActionListener()
+        {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				dice.roll(0);
+			}
+        });
+        
+        //add the roll button to the pane
+        rollButton.setSize(200, 40);
+        rollButton.setLocation(400, 300);
+        lPane.add(rollButton);
         
         bgWindow.add(lPane);
         bgWindow.setSize(gb.getSize());
         
-        //bgWindow.pack();
         bgWindow.setVisible(true);
+        
+//        //main game loop
+//        boolean testBool = true;
+//        while(testBool) //this shouldnt be the actual check the loop does
+//        {
+//        	//TODO add main game loop
+//        }
     }
 }

@@ -65,8 +65,9 @@ public class GamePiece extends JComponent
 
     public void setCoordinates(Point p) 
     { 
-    	point = p; 
-    	this.repaint();
+    	//point = p; 
+    	//this.repaint();
+    	this.setLocation(p);
     }
 
     public void setPieceImg(BufferedImage pieceImg) {

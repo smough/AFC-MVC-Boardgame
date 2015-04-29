@@ -114,6 +114,7 @@ public class GameBoard extends JComponent implements Model{
 		int newPos = current.getPosition();
 		newPos += roll;
 		newPos %= spaces.size();
+		current.setPosition(newPos);
 		Space newSpace = spaces.get(newPos);
 
 		//data to be passed to the player
