@@ -6,6 +6,7 @@ package frca.boardgame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,8 +30,13 @@ public class Program {
     int CPI;
     LinkedList<View> playerList;
     Player currentPlayer;
+    Player playerOne;
+    Player playerTwo;
     JButton rollButton;
     JLabel diceLabel;
+    JPanel scorePanel;
+    JLabel panel1;
+    JLabel panel2;
 
     public static void main(String[] args) {
         Program p = new Program();
@@ -62,12 +68,12 @@ public class Program {
 
         //create the first player
         GamePiece playerOnePiece = new GamePiece("3.png");
-        Player playerOne = new Player("Hulk", 0, 0, playerOnePiece);
+        playerOne = new Player("Hulk", 0, 0, playerOnePiece);
         playerList.add(playerOne);
 
         //create the second player
         GamePiece playerTwoPiece = new GamePiece("2.png");
-        Player playerTwo = new Player("Rey", 0, 0, playerTwoPiece);
+        playerTwo = new Player("Rey", 0, 0, playerTwoPiece);
         playerList.add(playerTwo);
 
         playerOne.setNext(playerTwo);
@@ -119,27 +125,34 @@ public class Program {
         //add button to roll dice        
         rollButton = new JButton();
         rollButton.addActionListener(new RollListener());
-        
 
         //add the roll button to the pane
-        rollButton.setSize(100, 40);
-        rollButton.setLocation(360, 400);
+        rollButton.setSize(480, 40);
+        rollButton.setLocation(160, 400);
         rollButton.setText(playerOne.getName() + "'s turn.");
         lPane.add(rollButton, 2);
-        
+
         //add the label to the pane
         diceLabel = new JLabel();
-        diceLabel.setSize(200,80);
+        diceLabel.setSize(200, 80);
         diceLabel.setLocation(370, 340);
         lPane.add(diceLabel, 2);
-        
+
         //add a pane that shows player names and scores
-        JPanel scorePane = new JPanel();
-        
+        scorePanel = new JPanel();
+        scorePanel.setLayout(new GridLayout(2, 1));
+        panel1 = new JLabel();
+        panel2 = new JLabel();
+        panel1.setText(playerOne.getName() + " : " + playerOne.getScore());
+        panel2.setText(playerTwo.getName() + " : " + playerTwo.getScore());
+        scorePanel.add(panel1);
+        scorePanel.add(panel2);
+
+        bgWindow.add(scorePanel, BorderLayout.EAST);
         lPane.setPreferredSize(wSize);
         bgWindow.add(lPane, BorderLayout.CENTER);
         bgWindow.setSize(gb.getSize());
-        
+
         lPane.validate();
         bgWindow.pack();
         bgWindow.setVisible(true);
@@ -147,45 +160,42 @@ public class Program {
 
     class RollListener implements ActionListener {
 
-        public void actionPerformed(ActionEvent e) {
-            
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+
             String currentName;
             String nextName;
-            
+
             //Checks if the player has missing turn
-            if (currentPlayer.missingTurn) 
-            {
+            if (currentPlayer.missingTurn) {
                 currentPlayer.missingTurn = false;
-                rollButton.setText(currentPlayer.getName() + " misses this turn, click me to continue.");
+                rollButton.setText(currentPlayer.getName() + " misses this turn, click for " + currentPlayer.getNext().getName() + "'s turn");
                 currentPlayer = currentPlayer.getNext();
                 CPI = playerList.indexOf(currentPlayer);
                 return;
             }
             //Dice is rolled
             dice.roll(CPI);
-            if(currentPlayer.getScore() >= 100)
-            {
-                //System.out.println(currentPlayer.getName() + " wins");
-                JOptionPane.showMessageDialog(null, currentPlayer.getName()+ " wins");
+            panel1.setText(playerOne.getName() + " : " + playerOne.getScore());
+            panel2.setText(playerTwo.getName() + " : " + playerTwo.getScore());
+            if (currentPlayer.getScore() >= 100) {
+                JOptionPane.showMessageDialog(null, currentPlayer.getName() + " wins");
                 System.exit(0);
             }
-            //CPI = playerList.indexOf(currentPlayer.getNext());
             currentName = currentPlayer.getName();
             //Check if the player has extra turn
-            if (currentPlayer.extraTurn)
-            {
+            if (currentPlayer.extraTurn) {
                 currentPlayer.extraTurn = false;
                 diceLabel.setText(currentName + " Rolled a:");
-                rollButton.setText(currentName + "'s turn");
-            }
-            else 
-            {
+                rollButton.setText(currentName + "'s extra turn");
+            } else {
                 diceLabel.setText(currentName + " Rolled a:");
                 currentPlayer = currentPlayer.getNext();
                 CPI = playerList.indexOf(currentPlayer);
                 currentName = currentPlayer.getName();
                 rollButton.setText(currentName + "'s turn");
-            }            
+            }
+
         }
     }
 }
