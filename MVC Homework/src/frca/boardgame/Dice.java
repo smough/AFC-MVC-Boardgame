@@ -30,8 +30,8 @@ public class Dice extends JComponent
         int w = this.getWidth();
         int h = this.getHeight();
 
-        g.setColor(Color.green);
-        g.fillRect(0, 0, w, h);
+        //g.setColor(Color.green);
+        //g.fillRect(0, 0, w, h);
 
         g.setColor(Color.white);
         g.fillRoundRect(w/10, h/3, w/3, h/3, 15, 15);
@@ -117,6 +117,7 @@ public class Dice extends JComponent
 
     public void roll(int playerNumber)
     {
+        this.repaint();
         die1 = (int) (1 + Math.random() * 6);
         die2 = (int) (1 + Math.random() * 6);
         total = die1 + die2;

@@ -14,6 +14,7 @@ public class Player implements View{
     public boolean missingTurn = false;
     public boolean extraTurn = false;
     private GamePiece piece;
+    private Player next;
 
     public Player(String newName, int newScore, int newPosition, GamePiece piece) {
         playerName = newName;
@@ -56,4 +57,11 @@ public class Player implements View{
 		this.modifyScore(scoreMod);
 		this.piece.setCoordinates(newCoord);
 	}
+        
+        public void setNext(Player nextPlayer){
+            this.next = nextPlayer;
+        }
+        public Player getNext(){
+            return this.next;
+        }
 }
