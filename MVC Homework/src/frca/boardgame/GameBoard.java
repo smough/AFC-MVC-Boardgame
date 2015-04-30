@@ -43,7 +43,17 @@ public class GameBoard extends JComponent implements Model{
 			g2d.setColor(toAdd.getColor());
 			g2d.fillRect(i*parentWidth/(j+1), 0, parentWidth/(j+1), parentHeight/(j+1));
 			g2d.setColor(Color.black);
+			g2d.drawRect(i*parentWidth/(j+1), 0, parentWidth/(j+1), parentHeight/(j+1));
 			g2d.drawString(toAdd.getName(), i*parentWidth/(j+1) + 10, 10);
+			g2d.drawString(Integer.toString(toAdd.getScoreModifier()), i*parentWidth/(j+1) + 10, parentHeight/(j+1)-20);
+			if(toAdd.isExtraTurn())
+			{
+				g2d.drawString("Get an extra turn", i*parentWidth/(j+1) + 5, parentHeight/(j+1) - 5);
+			}
+			else if (toAdd.isMissTurn())
+			{
+				g2d.drawString("Miss a turn", i*parentWidth/(j+1) + 5, parentHeight/(j+1) - 5);
+			}
 			toAdd.setX(i*parentWidth/(j+1) + 10);
 			toAdd.setY(10);
 		}
@@ -55,8 +65,18 @@ public class GameBoard extends JComponent implements Model{
 			g2d.setColor(toAdd.getColor());
 			g2d.fillRect(j*parentWidth/(j+1), (i-j)*parentHeight/(j+1), parentWidth/(j+1), parentHeight/(j+1));
 			g2d.setColor(Color.black);
+			g2d.drawRect(j*parentWidth/(j+1), (i-j)*parentHeight/(j+1), parentWidth/(j+1), parentHeight/(j+1));
 			g2d.drawString(toAdd.getName(), j*parentWidth/(j+1) + 10, (i-j)*parentHeight/(j+1) + 10);
 			toAdd.setX(j*parentWidth/(j+1) + 10);
+			g2d.drawString(Integer.toString(toAdd.getScoreModifier()), j*parentWidth/(j+1) + 10, (i-j)*parentHeight/(j+1) + parentHeight/(j+1)-20);
+			if(toAdd.isExtraTurn())
+			{
+				g2d.drawString("Get an extra turn", j*parentWidth/(j+1) + 5, (i-j)*parentHeight/(j+1) + parentHeight/(j+1) - 5);
+			}
+			else if (toAdd.isMissTurn())
+			{
+				g2d.drawString("Miss a turn", j*parentWidth/(j+1) + 5, (i-j)*parentHeight/(j+1) + parentHeight/(j+1) - 5);
+			}
 			toAdd.setY((i-j)*parentHeight/(j+1) + 10);
 		}
 
@@ -67,7 +87,17 @@ public class GameBoard extends JComponent implements Model{
 			g2d.setColor(toAdd.getColor());
 			g2d.fillRect((3*j-i)*parentWidth/(j+1), j*parentHeight/(j+1), parentWidth/(j+1), parentHeight/(j+1));
 			g2d.setColor(Color.black);
+			g2d.drawRect((3*j-i)*parentWidth/(j+1), j*parentHeight/(j+1), parentWidth/(j+1), parentHeight/(j+1));
 			g2d.drawString(toAdd.getName(), (3*j-i)*parentWidth/(j+1) + 10, j*parentHeight/(j+1) + 10);
+			g2d.drawString(Integer.toString(toAdd.getScoreModifier()), (3*j-i)*parentWidth/(j+1) + 10, j*parentHeight/(j+1) + parentHeight/(j+1) - 20);
+			if(toAdd.isExtraTurn())
+			{
+				g2d.drawString("Get an extra turn", (3*j-i)*parentWidth/(j+1) + 5, j*parentHeight/(j+1) + parentHeight/(j+1) - 5);
+			}
+			else if (toAdd.isMissTurn())
+			{
+				g2d.drawString("Miss a turn", (3*j-i)*parentWidth/(j+1) + 5, j*parentHeight/(j+1) + parentHeight/(j+1) - 5);
+			}
 			toAdd.setX((3*j-i)*parentWidth/(j+1) + 10);
 			toAdd.setY(j*parentHeight/(j+1) + 10);
 		}
@@ -79,7 +109,17 @@ public class GameBoard extends JComponent implements Model{
 			g2d.setColor(toAdd.getColor());
 			g2d.fillRect(0, (4*j - i)*parentHeight/(j+1), parentWidth/(j+1), parentHeight/(j+1));
 			g2d.setColor(Color.black);
+			g2d.drawRect(0, (4*j - i)*parentHeight/(j+1), parentWidth/(j+1), parentHeight/(j+1));
 			g2d.drawString(toAdd.getName(), 10, (4*j-i)*parentHeight/(j+1) + 10);
+			g2d.drawString(Integer.toString(toAdd.getScoreModifier()), 10, (4*j-i+1)*parentHeight/(j+1) - 20);
+			if(toAdd.isExtraTurn())
+			{
+				g2d.drawString("Get an extra turn", 10, (4*j-i+1)*parentHeight/(j+1) - 10);
+			}
+			else if (toAdd.isMissTurn())
+			{
+				g2d.drawString("Miss a turn", 10, (4*j-i+1)*parentHeight/(j+1) - 10);
+			}
 			toAdd.setX(10);
 			toAdd.setY((4*j-i)*parentHeight/(j+1) + 10);
 		}

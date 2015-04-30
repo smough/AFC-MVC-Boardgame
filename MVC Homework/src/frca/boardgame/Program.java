@@ -3,9 +3,10 @@
  */
 package frca.boardgame;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * Test commit
@@ -38,22 +40,22 @@ public class Program {
     public void go() {
         //Pre-made game board
         LinkedList<Space> spaces = new LinkedList<Space>();
-        spaces.add(new Space("Extra", Color.cyan, 105, true, false));
-        spaces.add(new Space("Test1", Color.cyan, 24, false, false));
-        spaces.add(new Space("Test2", Color.cyan, 25, false, false));
-        spaces.add(new Space("Miss", Color.cyan, 24, false, true));
-        spaces.add(new Space("Extra", Color.cyan, 25, true, false));
-        spaces.add(new Space("Test5", Color.cyan, 24, false, false));
-        spaces.add(new Space("Test6", Color.cyan, 25, false, false));
-        spaces.add(new Space("Test7", Color.cyan, 24, false, false));
-        spaces.add(new Space("Miss", Color.cyan, 25, false, true));
-        spaces.add(new Space("Extra", Color.cyan, 24, true, false));
-        spaces.add(new Space("Test10", Color.cyan, 25, false, false));
-        spaces.add(new Space("Extra", Color.cyan, 24, true, false));
-        spaces.add(new Space("Test12", Color.cyan, 25, false, false));
-        spaces.add(new Space("Test13", Color.cyan, 24, false, false));
-        spaces.add(new Space("Miss", Color.cyan, 25, false, true));
-        spaces.add(new Space("Miss", Color.red, 24, false, true));
+        spaces.add(new Space("Test0", Color.cyan, 105, true, false));
+        spaces.add(new Space("Test1", Color.cyan, 1, false, false));
+        spaces.add(new Space("Test2", Color.cyan, 2, false, false));
+        spaces.add(new Space("Test3", Color.cyan, 3, false, true));
+        spaces.add(new Space("Test4", Color.cyan, 4, true, false));
+        spaces.add(new Space("Test5", Color.cyan, 5, false, false));
+        spaces.add(new Space("Test6", Color.cyan, 6, false, false));
+        spaces.add(new Space("Test7", Color.cyan, 7, false, false));
+        spaces.add(new Space("Test8", Color.cyan, 8, false, true));
+        spaces.add(new Space("Test9", Color.cyan, 9, true, false));
+        spaces.add(new Space("Test10", Color.cyan, 10, false, false));
+        spaces.add(new Space("Test11", Color.cyan, 11, true, false));
+        spaces.add(new Space("Test12", Color.cyan, 12, false, false));
+        spaces.add(new Space("Test13", Color.cyan, 13, false, false));
+        spaces.add(new Space("Test14", Color.cyan, 14, false, true));
+        spaces.add(new Space("Test15", Color.red, 15, false, true));
 
         //create list of players
         playerList = new LinkedList<View>();
@@ -81,7 +83,7 @@ public class Program {
         JFrame bgWindow = new JFrame("Game Board");
         bgWindow.setSize(wSize);
         bgWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        bgWindow.setLayout(new GridLayout(1, 1));
+        bgWindow.setLayout(new BorderLayout());
 
         //create a pair of dice and add the gameboard as a viewer
         dice = new Dice(gb);
@@ -130,17 +132,22 @@ public class Program {
         diceLabel.setSize(200,80);
         diceLabel.setLocation(370, 340);
         lPane.add(diceLabel, 2);
-
-        bgWindow.add(lPane);
+        
+        //add a pane that shows player names and scores
+        JPanel scorePane = new JPanel();
+        
+        lPane.setPreferredSize(wSize);
+        bgWindow.add(lPane, BorderLayout.CENTER);
         bgWindow.setSize(gb.getSize());
-
+        
+        lPane.validate();
+        bgWindow.pack();
         bgWindow.setVisible(true);
     }
 
     class RollListener implements ActionListener {
 
-        @Override
-        public void actionPerformed(ActionEvent ae) {
+        public void actionPerformed(ActionEvent e) {
             
             String currentName;
             String nextName;
@@ -178,11 +185,7 @@ public class Program {
                 CPI = playerList.indexOf(currentPlayer);
                 currentName = currentPlayer.getName();
                 rollButton.setText(currentName + "'s turn");
-            }
-            
-
-            //Updates the text on the label and the button
-            
+            }            
         }
     }
 }
