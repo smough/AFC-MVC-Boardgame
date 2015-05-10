@@ -12,11 +12,13 @@ import javax.swing.JComponent;
  *
  * @author Frank Vescio
  */
-public class GameBoard extends JComponent implements Model{
+public class GameBoard extends JComponent implements Model, Runnable{
 
 	LinkedList<Space> spaces = new LinkedList<Space>();
 	private int winningScore;
 	LinkedList<View> viewers = new LinkedList<View>();
+	Thread myThread = new Thread(this);
+	int animateIndex = 0;
 
 	public GameBoard(LinkedList<Space> spaces, LinkedList<View> viewers)
 	{
@@ -147,6 +149,8 @@ public class GameBoard extends JComponent implements Model{
 
 	public void update(Object[] data)
 	{
+		if(myThread.isAlive())
+			this.stop();
 		Integer roll = (Integer) data[0];
 		Integer playerNumber = (Integer) data[1];
 		Player current = (Player) viewers.get(playerNumber);
@@ -156,7 +160,18 @@ public class GameBoard extends JComponent implements Model{
 		newPos %= spaces.size();
 		current.setPosition(newPos);
 		Space newSpace = spaces.get(newPos);
-
+		
+		//animate the space
+		animateIndex = spaces.indexOf(newSpace);
+		myThread = new Thread(this);
+		this.start();
+		try {
+			Thread.sleep(1999);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//this.stop();
 		//data to be passed to the player
 		
 		//space information to update score and give/take away turns
@@ -170,6 +185,52 @@ public class GameBoard extends JComponent implements Model{
 		Object[] sending = {skip, extra, scoreMod, newCoord};
 		
 		current.update(sending);
-		
+	}
+	
+	public void start()
+	{
+		myThread.start();
+	}
+	
+	public void stop()
+	{
+		myThread.interrupt();
+	}
+	
+	public void run() 
+	{
+		// TODO Auto-generated method stub
+		Thread.yield();
+		blink(animateIndex);
+	}
+	
+	//make a square blink when a player lands on it
+	public void blink(int spaceIndex) 
+	{
+		Space space = spaces.get(spaceIndex);
+		Color base = space.getColor();
+		Color blinking = (space.getScoreModifier()<0? Color.red:Color.green);
+		while(true)
+		{	
+			space.setColor(blinking);
+			this.repaint();	
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				space.setColor(base);
+				break;
+			}
+			
+			space.setColor(base);
+			this.repaint();
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				space.setColor(base);
+				break;
+			}
+		}
 	}
 }

@@ -35,6 +35,11 @@ public class Space {
         return color;
     }
     
+    public void setColor(Color c)
+    {
+    	color = c;
+    }
+    
     public int getScoreModifier() {
         return scoreModifier;
     }

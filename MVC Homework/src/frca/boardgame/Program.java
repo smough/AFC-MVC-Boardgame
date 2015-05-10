@@ -47,16 +47,16 @@ public class Program {
         //Pre-made game board
         LinkedList<Space> spaces = new LinkedList<Space>();
         spaces.add(new Space("Test0", Color.cyan, 105, true, false));
-        spaces.add(new Space("Test1", Color.cyan, 1, false, false));
+        spaces.add(new Space("Test1", Color.cyan, -1, false, false));
         spaces.add(new Space("Test2", Color.cyan, 2, false, false));
-        spaces.add(new Space("Test3", Color.cyan, 3, false, true));
-        spaces.add(new Space("Test4", Color.cyan, 4, true, false));
-        spaces.add(new Space("Test5", Color.cyan, 5, false, false));
-        spaces.add(new Space("Test6", Color.cyan, 6, false, false));
-        spaces.add(new Space("Test7", Color.cyan, 7, false, false));
-        spaces.add(new Space("Test8", Color.cyan, 8, false, true));
-        spaces.add(new Space("Test9", Color.cyan, 9, true, false));
-        spaces.add(new Space("Test10", Color.cyan, 10, false, false));
+        spaces.add(new Space("Test3", Color.cyan, -3, false, true));
+        spaces.add(new Space("Test4", Color.cyan, -4, true, false));
+        spaces.add(new Space("Test5", Color.cyan, -5, false, false));
+        spaces.add(new Space("Test6", Color.cyan, -6, false, false));
+        spaces.add(new Space("Test7", Color.cyan, -7, false, false));
+        spaces.add(new Space("Test8", Color.cyan, -8, false, true));
+        spaces.add(new Space("Test9", Color.cyan, -9, true, false));
+        spaces.add(new Space("Test10", Color.cyan, -10, false, false));
         spaces.add(new Space("Test11", Color.cyan, 11, true, false));
         spaces.add(new Space("Test12", Color.cyan, 12, false, false));
         spaces.add(new Space("Test13", Color.cyan, 13, false, false));
@@ -160,8 +160,7 @@ public class Program {
 
     class RollListener implements ActionListener {
 
-        @Override
-        public void actionPerformed(ActionEvent ae) {
+        public void actionPerformed(ActionEvent e) {
 
             String currentName;
             String nextName;
