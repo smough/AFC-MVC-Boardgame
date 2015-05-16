@@ -163,14 +163,8 @@ public class GameBoard extends JComponent implements Model, Runnable{
 		
 		//animate the space
 		animateIndex = spaces.indexOf(newSpace);
-		myThread = new Thread(this);
+		//myThread = new Thread(this);
 		this.start();
-		try {
-			Thread.sleep(1999);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		//this.stop();
 		//data to be passed to the player
 		
@@ -189,6 +183,7 @@ public class GameBoard extends JComponent implements Model, Runnable{
 	
 	public void start()
 	{
+		myThread = new Thread(this);
 		myThread.start();
 	}
 	
@@ -200,7 +195,7 @@ public class GameBoard extends JComponent implements Model, Runnable{
 	public void run() 
 	{
 		// TODO Auto-generated method stub
-		Thread.yield();
+		//Thread.yield();
 		blink(animateIndex);
 	}
 	
